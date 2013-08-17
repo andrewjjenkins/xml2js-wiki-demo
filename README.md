@@ -77,6 +77,29 @@ to that version of the page, like:
          <a href="...">...</a></p>
     </body></html>
 
+# Configuring the Proxy
+
+This config snippet is the relevant portion of config on the LineRate Proxy system:
+
+    !
+    interface em0
+     ipv6 address fe80::5054:ff:fe00:6/64 link-local
+     ip address 10.126.32.6 255.255.0.0
+    !
+    forward-proxy fp1
+     attach virtual-ip vip-wiki
+     admin-status online
+    !
+    virtual-ip vip-wiki
+     ! FIXME: ip range may have to change for your location
+     ip range 208.80.0.0 208.81.0.0 80
+     service http
+     admin-status online
+    !
+    script xml2js-demo
+     source file "xml2js-wiki-demo.js"
+     admin-status online
+
 # Modules used
 
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) for parsing the XML version history from Wikipedia
